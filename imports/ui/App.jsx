@@ -1,19 +1,11 @@
-import React, { Component } from 'react';
- 
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Habits } from '../api/habits.js';
 import Habit from './Habit.jsx';
  
-// App component - represents the whole app
-export default class App extends Component {
-	getHabits() {
-		return [
-			{ _id: 1, text: 'This is habit 1' },
-			{ _id: 2, text: 'This is habit 2' },
-			{ _id: 3, text: 'This is habit 3' },
-		];
-	}
- 
+class App extends Component {
  	renderHabits() {
-		return this.getHabits().map((habit) => (
+		return this.props.habits.map((habit) => (
 			<Habit key={habit._id} habit={habit} />
 		));
 	}
@@ -31,3 +23,13 @@ export default class App extends Component {
 		);
 	}
 }
+
+App.propTypes = {
+	habits: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+	return {
+		habits: Habits.find({}).fetch(),
+	};
+}, App);
