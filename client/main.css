@@ -38,3 +38,24 @@ li {
 li + li {
 	border-top: 1px black solid;
 }
+
+form {
+	margin-top: 10px;
+	margin-bottom: -10px;
+	position: relative;
+}
+
+.new-habit input {
+	box-sizing: border-box;
+	padding: 10px 0;
+	background: transparent;
+	border: none;
+	width: 100%;
+	padding-right: 80px;
+	font-size: 1em;
+	color: white;
+}
+
+.new-habit input:focus {
+	outline: 0;
+}
