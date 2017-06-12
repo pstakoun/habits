@@ -5,6 +5,14 @@ import { Habits } from '../api/habits.js';
 import Habit from './Habit.jsx';
  
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			hideCompleted: false,
+		};
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
 
@@ -18,8 +26,18 @@ class App extends Component {
 		ReactDOM.findDOMNode(this.refs.textInput).value = '';
 	}
 
+	toggleHideCompleted() {
+		this.setState({
+			hideCompleted: !this.state.hideCompleted,
+		});
+	}
+
  	renderHabits() {
-		return this.props.habits.map((habit) => (
+		let filteredHabits = this.props.habits;
+		if (this.state.hideCompleted) {
+			filteredHabits = filteredHabits.filter(habit => !habit.checked);
+		}
+		return filteredHabits.map((habit) => (
 			<Habit key={habit._id} habit={habit} />
 		));
 	}
@@ -29,6 +47,15 @@ class App extends Component {
 			<div className="container">
 				<header>
 					<h1>Habits</h1>
+
+					<label className="hide-completed">
+						<input type="checkbox" readOnly
+							checked={this.state.hideCompleted}
+							onClick={this.toggleHideCompleted.bind(this)}
+						/>
+						Hide Completed
+					</label>
+
 					<form className="new-habit" onSubmit={this.handleSubmit.bind(this)}>
 						<input type="text" ref="textInput" placeholder="Add new habit" />
 					</form>

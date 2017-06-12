@@ -29,6 +29,10 @@ form {
 	position: relative;
 }
 
+.hide-completed {
+	float: right;
+}
+
 .new-habit input {
 	box-sizing: border-box;
 	padding: 10px 0;
