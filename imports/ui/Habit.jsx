@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Habits } from '../api/habits.js';
 
 export default class Habit extends Component {
-	toggleChecked() {
+	toggleCompleted() {
 		Habits.update(this.props.habit._id, {
-			$set: { checked: !this.props.habit.checked },
+			$set: { completed: !this.props.habit.completed },
 		});
 	}
 
@@ -13,7 +13,7 @@ export default class Habit extends Component {
 	}
 
 	render() {
-		const habitClassName = this.props.habit.checked ? 'checked' : '';
+		const habitClassName = this.props.habit.completed ? 'completed' : '';
 
 		return (
 			<li className={habitClassName}>
@@ -22,8 +22,8 @@ export default class Habit extends Component {
 				</button>
 
 				<input type="checkbox" readOnly
-					checked={this.props.habit.checked}
-					onClick={this.toggleChecked.bind(this)}
+					checked={this.props.habit.completed}
+					onClick={this.toggleCompleted.bind(this)}
 				/>
 
 				<span className="text">{this.props.habit.text}</span>

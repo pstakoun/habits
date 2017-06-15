@@ -64,7 +64,7 @@ li + li {
 	border-top: 1px black solid;
 }
 
-li.checked {
+li.completed {
 	color: #888;
 }
 

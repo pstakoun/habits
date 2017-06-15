@@ -35,7 +35,7 @@ class App extends Component {
  	renderHabits() {
 		let filteredHabits = this.props.habits;
 		if (this.state.hideCompleted) {
-			filteredHabits = filteredHabits.filter(habit => !habit.checked);
+			filteredHabits = filteredHabits.filter(habit => !habit.completed);
 		}
 		return filteredHabits.map((habit) => (
 			<Habit key={habit._id} habit={habit} />
@@ -50,7 +50,7 @@ class App extends Component {
 
 					<label className="hide-completed">
 						<input type="checkbox" readOnly
-							checked={this.state.hideCompleted}
+							completed={this.state.hideCompleted}
 							onClick={this.toggleHideCompleted.bind(this)}
 						/>
 						Hide Completed
