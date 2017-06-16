@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Habits } from '../api/habits.js';
 import Habit from './Habit.jsx';
+import { GetDate } from '../helpers/habits.js';
  
 class App extends Component {
 	constructor(props) {
@@ -21,6 +22,7 @@ class App extends Component {
 		Habits.insert({
 			text,
 			createdAt: new Date(),
+			datesCompleted: [],
 		});
 
 		ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -35,7 +37,7 @@ class App extends Component {
  	renderHabits() {
 		let filteredHabits = this.props.habits;
 		if (this.state.hideCompleted) {
-			filteredHabits = filteredHabits.filter(habit => !habit.completed);
+			filteredHabits = filteredHabits.filter(habit => !habit.datesCompleted.includes(GetDate()));
 		}
 		return filteredHabits.map((habit) => (
 			<Habit key={habit._id} habit={habit} />
@@ -50,7 +52,7 @@ class App extends Component {
 
 					<label className="hide-completed">
 						<input type="checkbox" readOnly
-							completed={this.state.hideCompleted}
+							checked={this.state.hideCompleted}
 							onClick={this.toggleHideCompleted.bind(this)}
 						/>
 						Hide Completed

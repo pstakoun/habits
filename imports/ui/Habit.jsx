@@ -1,11 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { Habits } from '../api/habits.js';
+import { GetDate } from '../helpers/habits.js';
 
 export default class Habit extends Component {
 	toggleCompleted() {
-		Habits.update(this.props.habit._id, {
-			$set: { completed: !this.props.habit.completed },
-		});
+		if (this.props.habit.datesCompleted.includes(GetDate())) {
+			Habits.update(this.props.habit._id, {
+				$pull: { datesCompleted: GetDate() },
+			});
+		} else {
+			Habits.update(this.props.habit._id, {
+				$push: { datesCompleted: GetDate() },
+			});
+		}
 	}
 
 	deleteHabit() {
@@ -13,7 +20,8 @@ export default class Habit extends Component {
 	}
 
 	render() {
-		const habitClassName = this.props.habit.completed ? 'completed' : '';
+		const completed = this.props.habit.datesCompleted.includes(GetDate());
+		const habitClassName = completed ? 'completed' : '';
 
 		return (
 			<li className={habitClassName}>
@@ -22,7 +30,7 @@ export default class Habit extends Component {
 				</button>
 
 				<input type="checkbox" readOnly
-					checked={this.props.habit.completed}
+					checked={completed}
 					onClick={this.toggleCompleted.bind(this)}
 				/>
 
