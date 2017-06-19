@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Habits } from '../api/habits.js';
 import { GetDate } from '../helpers/habits.js';
 
+var LineChart = require("react-chartjs").Line;
+
 export default class Habit extends Component {
 	toggleCompleted() {
 		if (this.props.habit.datesCompleted.includes(GetDate())) {
@@ -39,7 +41,7 @@ export default class Habit extends Component {
 						<span className="text">{this.props.habit.text}</span>
 					</div>
 					<div className="col-sm-6">
-						<canvas className="chart"></canvas>
+						<LineChart data={null} options={null} />
 					</div>
 				</li>
 			</div>
