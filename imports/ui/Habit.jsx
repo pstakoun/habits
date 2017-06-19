@@ -24,18 +24,25 @@ export default class Habit extends Component {
 		const habitClassName = completed ? 'completed' : '';
 
 		return (
-			<li className={habitClassName}>
-				<button className="delete" onClick={this.deleteHabit.bind(this)}>
-					&times;
-				</button>
+			<div className="row">
+				<li id={this.props.habit._id} className={habitClassName}>
+					<div className="col-sm-6">
+						<button className="delete" onClick={this.deleteHabit.bind(this)}>
+							&times;
+						</button>
 
-				<input type="checkbox" readOnly
-					checked={completed}
-					onClick={this.toggleCompleted.bind(this)}
-				/>
+						<input type="checkbox" readOnly
+							checked={completed}
+							onClick={this.toggleCompleted.bind(this)}
+						/>
 
-				<span className="text">{this.props.habit.text}</span>
-			</li>
+						<span className="text">{this.props.habit.text}</span>
+					</div>
+					<div className="col-sm-6">
+						<canvas className="chart"></canvas>
+					</div>
+				</li>
+			</div>
 		);
 	}
 }

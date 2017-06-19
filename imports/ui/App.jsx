@@ -48,7 +48,7 @@ class App extends Component {
 		return (
 			<div className="container">
 				<header>
-					<h1>Habits</h1>
+					<h1>Habit Tracker</h1>
 
 					<label className="hide-completed">
 						<input type="checkbox" readOnly
@@ -62,7 +62,7 @@ class App extends Component {
 						<input type="text" ref="textInput" placeholder="Add new habit" />
 					</form>
 				</header>
- 				<ul>
+				<ul>
 					{this.renderHabits()}
 				</ul>
 			</div>
