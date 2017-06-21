@@ -59,7 +59,7 @@ export default class Habit extends Component {
 						<span className="text">{this.props.habit.text}</span>
 					</div>
 					<div className="col-sm-6">
-						<LineChart data={chartData} height="100" width="345" />
+						<LineChart data={chartData} height="100" width="555" />
 					</div>
 				</li>
 			</div>
