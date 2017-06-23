@@ -48,7 +48,11 @@ export default class Habit extends Component {
 				<li id={this.props.habit._id} className={habitClassName}>
 					<div className="col-sm-6">
 						<button className="delete" onClick={this.deleteHabit.bind(this)}>
-							&times;
+							<i className="fa fa-trash-o" aria-hidden="true"></i>
+						</button>
+
+						<button className="delete" onClick={this.deleteHabit.bind(this)}>
+							<i className="fa fa-bell-o" aria-hidden="true"></i>
 						</button>
 
 						<input type="checkbox" readOnly
