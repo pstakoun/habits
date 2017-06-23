@@ -75,7 +75,7 @@ li i {
 	font-size: 18px;
 }
 
-.delete {
+li button {
 	float: right;
 	font-weight: bold;
 	background: none;
@@ -84,7 +84,7 @@ li i {
 	position: relative;
 }
 
-canvas {
+li canvas {
 	width: 100% !important;
 	height: 100% !important;
 }

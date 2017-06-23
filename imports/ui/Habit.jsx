@@ -18,7 +18,13 @@ export default class Habit extends Component {
 	}
 
 	deleteHabit() {
-		Habits.remove(this.props.habit._id);
+		if (confirm('Are you sure you want to delete this habit?')) {
+			Habits.remove(this.props.habit._id);
+		}
+	}
+
+	setHabitReminder() {
+		alert('TODO set reminder');
 	}
 
 	render() {
@@ -47,11 +53,11 @@ export default class Habit extends Component {
 			<div className="row">
 				<li id={this.props.habit._id} className={habitClassName}>
 					<div className="col-sm-6">
-						<button className="delete" onClick={this.deleteHabit.bind(this)}>
+						<button onClick={this.deleteHabit.bind(this)}>
 							<i className="fa fa-trash-o" aria-hidden="true"></i>
 						</button>
 
-						<button className="delete" onClick={this.deleteHabit.bind(this)}>
+						<button onClick={this.setHabitReminder.bind(this)}>
 							<i className="fa fa-bell-o" aria-hidden="true"></i>
 						</button>
 
