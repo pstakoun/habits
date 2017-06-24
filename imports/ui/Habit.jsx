@@ -37,7 +37,7 @@ export default class Habit extends Component {
 			}]
 		};
 
-		for (var i = 7; i > 0; i--) {
+		for (var i = Math.floor(new Date() - this.props.habit.createdAt) / (1000* 60 * 60 * 24); i >= -1; i--) {
 			chartData.labels.push('');
 			var count = 0;
 			for (var j = 0; j < this.props.habit.datesCompleted.length; j++) {
