@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Habits } from '../api/habits.js';
 import Habit from './Habit.jsx';
 import { GetDate } from '../helpers/habits.js';
- 
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -34,7 +34,7 @@ class App extends Component {
 		});
 	}
 
- 	renderHabits() {
+	renderHabits() {
 		let filteredHabits = this.props.habits;
 		if (this.state.hideCompleted) {
 			filteredHabits = filteredHabits.filter(habit => !habit.datesCompleted.includes(GetDate()));
@@ -44,7 +44,7 @@ class App extends Component {
 		));
 	}
  
- 	render() {
+	render() {
 		return (
 			<div className="container">
 				<header>
@@ -57,6 +57,9 @@ class App extends Component {
 						/>
 						Hide Completed
 					</label>
+
+					<button id="authorize-button" style={{display: 'none'}}>Authorize</button>
+					<button id="signout-button" style={{display: 'none'}}>Sign Out</button>
 
 					<form className="new-habit" onSubmit={this.handleSubmit.bind(this)}>
 						<input type="text" ref="textInput" placeholder="Add new habit" />
