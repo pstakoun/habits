@@ -33,11 +33,22 @@ export default class Habit extends Component {
 	render() {
 		const completed = this.props.habit.datesCompleted.includes(GetDate());
 		const habitClassName = completed ? 'completed' : '';
+
 		var chartData = {
 			labels: [],
 			datasets: [{
 				data: []
 			}]
+		};
+
+		var chartOptions = {
+			scales: {
+				yAxis: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			}
 		};
 
 		// UTC SCREWS THIS UP!!! Works after 8 PM... TODO
@@ -73,7 +84,7 @@ export default class Habit extends Component {
 						<span className="text">{this.props.habit.text}</span>
 					</div>
 					<div className="col-sm-6">
-						<LineChart data={chartData} height="100" width="555" />
+						<LineChart data={chartData} options={chartOptions} height="100" width="555" />
 					</div>
 				</li>
 			</div>
