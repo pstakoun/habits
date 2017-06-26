@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Habits } from '../api/habits.js';
 import { GetDate } from '../helpers/habits.js';
+import { HandleGoogleAuth, GoogleSignedIn } from '../helpers/google.js';
 
 var LineChart = require("react-chartjs").Line;
 
@@ -24,7 +25,9 @@ export default class Habit extends Component {
 	}
 
 	setHabitReminder() {
-		alert('TODO set reminder');
+		if (!GoogleSignedIn) {
+			HandleGoogleAuth();
+		}
 	}
 
 	render() {

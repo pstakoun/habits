@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Habits } from '../api/habits.js';
 import Habit from './Habit.jsx';
 import { GetDate } from '../helpers/habits.js';
+import { LoadGoogleAPI } from '../helpers/google.js';
 
 class App extends Component {
 	constructor(props) {
@@ -15,50 +16,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.loadGoogleAPI();
-	}
-
-	loadGoogleAPI() {
-		const script = document.createElement("script");
-		script.src = "https://apis.google.com/js/api.js";
-		document.body.appendChild(script);
-
-		script.onload = () => {
-			window.gapi.load('client:auth2', this.initClient.bind(this));
-		}
-	}
-
-	initClient() {
-		window.gapi.client.init({
-			discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-			clientId: '649545190512-qi80ml37nptf8pvf8kne34gbhqpn0u7b.apps.googleusercontent.com',
-			scope: 'https://www.googleapis.com/auth/calendar'
-		}).then(this.postInitClient.bind(this));
-	}
-
-	postInitClient() {
-		gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
-		this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-		this.refs.authorizeButton.onclick = this.handleAuthClick.bind(this);
-		this.refs.signoutButton.onclick = this.handleSignoutClick.bind(this);
-	}
-
-	updateSigninStatus(isSignedIn) {
-		if (isSignedIn) {
-			this.refs.authorizeButton.style.display = 'none';
-			this.refs.signoutButton.style.display = 'block';
-		} else {
-			this.refs.authorizeButton.style.display = 'block';
-			this.refs.signoutButton.style.display = 'none';
-		}
-	}
-
-	handleAuthClick(event) {
-		window.gapi.auth2.getAuthInstance().signIn();
-	}
-
-	handleSignoutClick(event) {
-		window.gapi.auth2.getAuthInstance().signOut();
+		LoadGoogleAPI();
 	}
 
 	handleSubmit(event) {
@@ -104,9 +62,6 @@ class App extends Component {
 						/>
 						Hide Completed
 					</label>
-
-					<button ref="authorizeButton" style={{display: 'none', color: 'black'}}>Authorize</button>
-					<button ref="signoutButton" style={{display: 'none', color: 'black'}}>Sign Out</button>
 
 					<form className="new-habit" onSubmit={this.handleSubmit.bind(this)}>
 						<input type="text" ref="textInput" placeholder="Add new habit" />
