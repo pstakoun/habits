@@ -37,12 +37,13 @@ export default class Habit extends Component {
 			}]
 		};
 
+		// UTC SCREWS THIS UP!!! Works after 8 PM... TODO
 		for (var i = Math.floor((new Date() - this.props.habit.createdAt) / (1000* 60 * 60 * 24)); i > -1; i--) {
 			chartData.labels.push('');
 			var count = 0;
 			for (var j = 0; j < this.props.habit.datesCompleted.length; j++) {
 				console.log();
-				if (Math.floor((new Date() - new Date(this.props.habit.datesCompleted[j].substring(0, 4)+'-'+this.props.habit.datesCompleted[j].substring(4, 6)+'-'+this.props.habit.datesCompleted[j].substring(6,8))) / (1000* 60 * 60 * 24)) >= i) {
+				if (Math.floor((new Date() - new Date(this.props.habit.datesCompleted[j].substring(0, 4)+'-'+this.props.habit.datesCompleted[j].substring(4, 6)+'-'+this.props.habit.datesCompleted[j].substring(6,8))) / (1000* 60 * 60 * 24)) > i) {
 					count++;
 				}
 			}
