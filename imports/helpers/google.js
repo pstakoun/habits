@@ -1,7 +1,7 @@
 var signedIn = false;
 
 export function LoadGoogleAPI() {
-	window.gapi.load('auth2', function() {
+	window.gapi.load('client:auth2', function() {
 		window.gapi.auth2.init({
 			discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
 			clientId: '649545190512-qi80ml37nptf8pvf8kne34gbhqpn0u7b.apps.googleusercontent.com',

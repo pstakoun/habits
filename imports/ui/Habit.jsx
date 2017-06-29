@@ -25,7 +25,36 @@ export default class Habit extends Component {
 	}
 
 	setHabitReminder() {
-		if (!GoogleSignedIn) {
+		if (GoogleSignedIn()) {
+			var text = this.props.habit.text;
+			window.gapi.client.load('calendar', 'v3', function() {
+				var event = {
+					'summary': text,
+					'start': {
+						'dateTime': new Date().toISOString(),
+						'timeZone': 'America/Toronto'
+					},
+					'end': {
+						'dateTime': new Date(new Date().getTime() + 30*60000).toISOString(),
+						'timeZone': 'America/Toronto'
+					},
+					'recurrence': [
+						'RRULE:FREQ=DAILY'
+					]
+				};
+
+				console.log(JSON.stringify(event));
+
+				var request = window.gapi.client.calendar.events.insert({
+					'calendarId': 'primary',
+					'resource': event
+				});
+
+				request.execute(function(event) {
+					alert(event.htmlLink);
+				});
+			});
+		} else {
 			HandleGoogleAuth();
 		}
 	}
