@@ -106,3 +106,7 @@ li canvas {
 .hidden {
 	display: none;
 }
+
+*:focus {
+	outline: none;
+}
