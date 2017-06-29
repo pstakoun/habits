@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { Habits } from '../api/habits.js';
 import { GetDate } from '../helpers/habits.js';
 import { HandleGoogleAuth, GoogleSignedIn } from '../helpers/google.js';
@@ -6,6 +7,14 @@ import { HandleGoogleAuth, GoogleSignedIn } from '../helpers/google.js';
 var LineChart = require("react-chartjs").Line;
 
 export default class Habit extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			showTime: false,
+		};
+	}
+
 	toggleCompleted() {
 		if (this.props.habit.datesCompleted.includes(GetDate())) {
 			Habits.update(this.props.habit._id, {
@@ -24,18 +33,30 @@ export default class Habit extends Component {
 		}
 	}
 
-	setHabitReminder() {
+	toggleShowTime() {
+		this.setState({
+			showTime: !this.state.showTime
+		});
+	}
+
+	setHabitReminder(event) {
+		event.preventDefault();
+
 		if (GoogleSignedIn()) {
 			var text = this.props.habit.text;
+			var time = ReactDOM.findDOMNode(this.refs.timeInput).value.trim().split(':');
+			var start = new Date();
+			start.setHours(parseInt(time[0]), parseInt(time[1]), 0);
+			var end = new Date(start.getTime() + 30*60000);
 			window.gapi.client.load('calendar', 'v3', function() {
 				var event = {
 					'summary': text,
 					'start': {
-						'dateTime': new Date().toISOString(),
+						'dateTime': start.toISOString(),
 						'timeZone': 'America/Toronto'
 					},
 					'end': {
-						'dateTime': new Date(new Date().getTime() + 30*60000).toISOString(),
+						'dateTime': end.toISOString(),
 						'timeZone': 'America/Toronto'
 					},
 					'recurrence': [
@@ -101,7 +122,12 @@ export default class Habit extends Component {
 							<i className="fa fa-trash-o" aria-hidden="true"></i>
 						</button>
 
-						<button onClick={this.setHabitReminder.bind(this)}>
+						<form className="set-time" onSubmit={this.setHabitReminder.bind(this)}>
+							<input type={this.state.showTime ? "time" : "hidden"} ref="timeInput" />
+							<input type="submit" className="hidden" />
+						</form>
+
+						<button onClick={this.toggleShowTime.bind(this)}>
 							<i className="fa fa-bell-o" aria-hidden="true"></i>
 						</button>
 
